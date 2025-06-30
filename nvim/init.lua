@@ -219,6 +219,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Automatically open nvim-tree when nvim starts
+vim.api.nvim_create_autocmd('VimEnter', {
+  callback = function()
+    require('nvim-tree.api').tree.open()
+  end,
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
