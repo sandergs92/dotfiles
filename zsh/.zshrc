@@ -48,5 +48,9 @@ then
     pgrep i3 || exec startx "$XDG_CONFIG_HOME/X11/.xinitrc"
 fi
 
+if [ -f "/home/sandergs/miniconda3/bin/conda" ]; then
+    eval "$(/home/sandergs/miniconda3/bin/conda shell.zsh hook)"
+fi
+
 # should always be at bottom
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
