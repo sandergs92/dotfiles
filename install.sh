@@ -30,3 +30,9 @@ ln -sf "$HOME/dotfiles/zsh/.zshrc" "$HOME/.config/zsh"
 ln -sf "$HOME/dotfiles/zsh/aliases" "$HOME/.config/zsh/aliases"
 rm -rf "$HOME/.config/zsh/external"
 ln -sf "$HOME/dotfiles/zsh/external" "$HOME/.config/zsh"
+
+########
+# kitty#
+########
+rm -rf "$HOME/.config/kitty"
+ln -s "$HOME/dotfiles/kitty" "$HOME/.config"

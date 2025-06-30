@@ -6,4 +6,4 @@
 
 **WM:** i3
 
-**Terminal:** rxvt-unicode
+**Terminal:** kitty

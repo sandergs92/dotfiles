@@ -49,7 +49,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec urxvtc
+bindsym $mod+Return exec kitty --single-instance
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -116,7 +116,7 @@ bindsym $mod+a focus parent
 # We use variables to avoid repeating the names in multiple places.
 set $terms "1: terms"
 set $web "2: web"
-set $db "3: db"
+set $games "3: games"
 set $file_manager "4: files"
 set $mail "5: mails"
 set $documents "6: documents"
@@ -125,7 +125,7 @@ set $mindmap "7: mindmap"
 # switch to workspace
 bindsym $mod+1 workspace $terms
 bindsym $mod+2 workspace $web
-bindsym $mod+3 workspace $db
+bindsym $mod+3 workspace $games
 bindsym $mod+4 workspace $file_manager
 bindsym $mod+5 workspace $mail
 bindsym $mod+6 workspace $documents
@@ -136,7 +136,7 @@ bindsym $mod+9 workspace 9
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $terms
 bindsym $mod+Shift+2 move container to workspace $web
-bindsym $mod+Shift+3 move container to workspace $db
+bindsym $mod+Shift+3 move container to workspace $games
 bindsym $mod+Shift+4 move container to workspace $file_manager
 bindsym $mod+Shift+5 move container to workspace $mail
 bindsym $mod+Shift+6 move container to workspace $documents
@@ -220,14 +220,4 @@ exec_always --no-startup-id feh --no-fehbg --bg-fill ~/.config/i3/feh/test.jpg
 # hide borders
 hide_edge_borders smart
 
-for_window [class="URxvt*"] border pixel 1
-
-# Terminal scratchpad
-for_window [instance="urxvt_scratchpad"] move to scratchpad, border none
-bindsym $mod+Shift+t [instance="urxvt_scratchpad"] scratchpad show
-exec urxvtc -name urxvt_scratchpad
-
-# htop scratchpad
-for_window [instance="htop_scratchpad"] move to scratchpad, border none
-bindsym $mod+Shift+p [instance="htop_scratchpad"] scratchpad show
-exec urxvtc -name htop_scratchpad -e htop
+for_window [class="kitty"] border pixel 1
