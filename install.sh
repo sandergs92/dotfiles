@@ -17,8 +17,12 @@ ln -s "$HOME/dotfiles/X11" "$HOME/.config"
 ########
 rm -rf "$HOME/.config/i3"
 ln -s "$HOME/dotfiles/i3" "$HOME/.config"
-rm -rf "$HOME/.config/i3status"
-ln -s "$HOME/dotfiles/i3status" "$HOME/.config"
+
+########
+#polyb.#
+########
+rm -rf "$HOME/.config/polybar"
+ln -s "$HOME/dotfiles/polybar" "$HOME/.config"
 
 ########
 # zsh  #
