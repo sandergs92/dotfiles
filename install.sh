@@ -3,9 +3,8 @@
 ########
 # nvim #
 ########
-mkdir -p "$HOME/.config/nvim"
-mkdir -p "$HOME/.config/nvim/undo"
-ln -sf "$HOME/dotfiles/nvim/init.vim" "$HOME/.config/nvim"
+rm -rf "$HOME/.config/nvim"
+ln -s "$HOME/dotfiles/nvim" "$HOME/.config"
 
 ########
 # x11  #
