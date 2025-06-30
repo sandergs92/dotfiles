@@ -36,3 +36,9 @@ ln -sf "$HOME/dotfiles/zsh/external" "$HOME/.config/zsh"
 ########
 rm -rf "$HOME/.config/kitty"
 ln -s "$HOME/dotfiles/kitty" "$HOME/.config"
+
+########
+# picom#
+########
+rm -rf "$HOME/.config/picom"
+ln -s "$HOME/dotfiles/picom" "$HOME/.config"
