@@ -3,46 +3,52 @@
 ########
 # nvim #
 ########
-rm -rf "$HOME/.config/nvim"
-ln -s "$HOME/dotfiles/nvim" "$HOME/.config"
+rm -rf "$XDG_CONFIG_HOME/nvim"
+ln -s "$DOTFILES/nvim" "$XDG_CONFIG_HOME"
 
 ########
 # x11  #
 ########
-rm -rf "$HOME/.config/X11"
-ln -s "$HOME/dotfiles/X11" "$HOME/.config"
+rm -rf "$XDG_CONFIG_HOME/X11"
+ln -s "$DOTFILES/X11" "$XDG_CONFIG_HOME"
 
 ########
 # i3   #
 ########
-rm -rf "$HOME/.config/i3"
-ln -s "$HOME/dotfiles/i3" "$HOME/.config"
+rm -rf "$XDG_CONFIG_HOME/i3"
+ln -s "$DOTFILES/i3" "$XDG_CONFIG_HOME"
 
 ########
 #polyb.#
 ########
-rm -rf "$HOME/.config/polybar"
-ln -s "$HOME/dotfiles/polybar" "$HOME/.config"
+rm -rf "$XDG_CONFIG_HOME/polybar"
+ln -s "$DOTFILES/polybar" "$XDG_CONFIG_HOME"
 
 ########
 # zsh  #
 ########
-mkdir -p "$HOME/.config/zsh"
-mkdir -p "$HOME/.config/local/share"
-ln -sf "$HOME/dotfiles/zsh/.zshenv" "$HOME"
-ln -sf "$HOME/dotfiles/zsh/.zshrc" "$HOME/.config/zsh"
-ln -sf "$HOME/dotfiles/zsh/aliases" "$HOME/.config/zsh/aliases"
-rm -rf "$HOME/.config/zsh/external"
-ln -sf "$HOME/dotfiles/zsh/external" "$HOME/.config/zsh"
+mkdir -p "$XDG_CONFIG_HOME/zsh"
+mkdir -p "$XDG_CONFIG_HOME/local/share"
+ln -sf "$DOTFILES/zsh/.zshenv" "$HOME"
+ln -sf "$DOTFILES/zsh/.zshrc" "$XDG_CONFIG_HOME/zsh"
+ln -sf "$DOTFILES/zsh/aliases" "$XDG_CONFIG_HOME/zsh/aliases"
+rm -rf "$XDG_CONFIG_HOME/zsh/external"
+ln -sf "$DOTFILES/zsh/external" "$XDG_CONFIG_HOME/zsh"
 
 ########
 # kitty#
 ########
-rm -rf "$HOME/.config/kitty"
-ln -s "$HOME/dotfiles/kitty" "$HOME/.config"
+rm -rf "$XDG_CONFIG_HOME/kitty"
+ln -s "$DOTFILES/kitty" "$XDG_CONFIG_HOME"
 
 ########
 # picom#
 ########
-rm -rf "$HOME/.config/picom"
-ln -s "$HOME/dotfiles/picom" "$HOME/.config"
+rm -rf "$XDG_CONFIG_HOME/picom"
+ln -s "$DOTFILES/picom" "$XDG_CONFIG_HOME"
+
+########
+# tmux #
+########
+mkdir -p "$XDG_CONFIG_HOME/tmux"
+ln -sf "$DOTFILES/tmux/tmux.conf" "$XDG_CONFIG_HOME/tmux/tmux.conf"
