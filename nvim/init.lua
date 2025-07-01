@@ -169,28 +169,8 @@ vim.o.confirm = true
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
--- Toggle focus between nvim-tree and the main buffer
-vim.keymap.set('n', '<leader>e', function()
-  local api = require 'nvim-tree.api'
-  local view = require 'nvim-tree.view'
-
-  if not view.is_visible() then
-    api.tree.open()
-    api.tree.focus()
-    return
-  end
-
-  local tree_win = view.get_winnr()
-  local curr_win = vim.api.nvim_get_current_win()
-
-  if curr_win == tree_win then
-    -- In nvim-tree, go to the right buffer window
-    vim.cmd 'wincmd l'
-  else
-    -- In a buffer, go to the tree
-    api.tree.focus()
-  end
-end, { desc = 'Toggle focus between nvim-tree and buffer' })
+-- Custom keymaps in /lua folder
+require 'custom.km'
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
@@ -231,6 +211,9 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
+-- Custom user commands
+require 'custom.uc'
+
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.hl.on_yank()`
@@ -241,21 +224,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.hl.on_yank()
   end,
 })
-
--- Automatically open nvim-tree when nvim starts
-vim.api.nvim_create_autocmd('VimEnter', {
-  callback = function()
-    require('nvim-tree.api').tree.open()
-  end,
-})
-
-vim.api.nvim_create_user_command('Q', function()
-  local view = require 'nvim-tree.view'
-  if view.is_visible() then
-    view.close()
-  end
-  vim.cmd 'q'
-end, {})
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -336,7 +304,7 @@ require('lazy').setup({
   -- Then, because we use the `opts` key (recommended), the configuration runs
   -- after the plugin has been loaded as `require(MODULE).setup(opts)`.
 
-  { -- Useful plugin to show you pending keybinds.
+  {                     -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
@@ -417,7 +385,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -525,7 +493,7 @@ require('lazy').setup({
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',    opts = {} },
 
       -- Allows extra capabilities provided by blink.cmp
       'saghen/blink.cmp',
@@ -709,37 +677,109 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
-        -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
-        --
-
         lua_ls = {
-          -- cmd = { ... },
-          -- filetypes = { ... },
+          -- cmd = {...},
+          -- filetypes { ...},
           -- capabilities = {},
           settings = {
             Lua = {
+              runtime = { version = 'LuaJIT' },
+              workspace = {
+                checkThirdParty = false,
+                -- Tells lua_ls where to find all the Lua files that you have loaded
+                -- for your neovim configuration.
+                library = {
+                  '${3rd}/luv/library',
+                  unpack(vim.api.nvim_get_runtime_file('', true)),
+                },
+                -- If lua_ls is really slow on your computer, you can try this instead:
+                -- library = { vim.env.VIMRUNTIME },
+              },
               completion = {
                 callSnippet = 'Replace',
               },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
+              telemetry = { enable = false },
+              diagnostics = { disable = { 'missing-fields' } },
             },
           },
         },
+        pylsp = {
+          settings = {
+            pylsp = {
+              plugins = {
+                pyflakes = { enabled = false },
+                pycodestyle = { enabled = false },
+                autopep8 = { enabled = false },
+                yapf = { enabled = false },
+                mccabe = { enabled = false },
+                pylsp_mypy = { enabled = false },
+                pylsp_black = { enabled = false },
+                pylsp_isort = { enabled = false },
+              },
+            },
+          },
+        },
+        -- basedpyright = {
+        --   -- Config options: https://github.com/DetachHead/basedpyright/blob/main/docs/settings.md
+        --   settings = {
+        --     basedpyright = {
+        --       disableOrganizeImports = true, -- Using Ruff's import organizer
+        --       disableLanguageServices = false,
+        --       analysis = {
+        --         ignore = { '*' },                 -- Ignore all files for analysis to exclusively use Ruff for linting
+        --         typeCheckingMode = 'off',
+        --         diagnosticMode = 'openFilesOnly', -- Only analyze open files
+        --         useLibraryCodeForTypes = true,
+        --         autoImportCompletions = true,     -- whether pyright offers auto-import completions
+        --       },
+        --     },
+        --   },
+        -- },
+        ruff = {
+          -- Notes on code actions: https://github.com/astral-sh/ruff-lsp/issues/119#issuecomment-1595628355
+          -- Get isort like behavior: https://github.com/astral-sh/ruff/issues/8926#issuecomment-1834048218
+          commands = {
+            RuffAutofix = {
+              function()
+                vim.lsp.buf.execute_command {
+                  command = 'ruff.applyAutofix',
+                  arguments = {
+                    { uri = vim.uri_from_bufnr(0) },
+                  },
+                }
+              end,
+              description = 'Ruff: Fix all auto-fixable problems',
+            },
+            RuffOrganizeImports = {
+              function()
+                vim.lsp.buf.execute_command {
+                  command = 'ruff.applyOrganizeImports',
+                  arguments = {
+                    { uri = vim.uri_from_bufnr(0) },
+                  },
+                }
+              end,
+              description = 'Ruff: Format imports',
+            },
+          },
+        },
+        --jsonls = {},
+        --sqlls = {},
+        terraformls = {},
+        --yamlls = {},
+        --bashls = {},
+        --dockerls = {},
+        --docker_compose_language_service = {},
+        -- tailwindcss = {},
+        -- graphql = {},
+        -- html = { filetypes = { 'html', 'twig', 'hbs' } },
+        -- cssls = {},
+        -- ltex = {},
+        -- texlab = {},
       }
 
       -- Ensure the servers and tools above are installed
-      --
+      require('mason').setup()
       -- To check the current status of installed tools and/or manually install
       -- other tools, you can run
       --    :Mason
@@ -772,47 +812,6 @@ require('lazy').setup({
         },
       }
     end,
-  },
-
-  { -- Autoformat
-    'stevearc/conform.nvim',
-    event = { 'BufWritePre' },
-    cmd = { 'ConformInfo' },
-    keys = {
-      {
-        '<leader>f',
-        function()
-          require('conform').format { async = true, lsp_format = 'fallback' }
-        end,
-        mode = '',
-        desc = '[F]ormat buffer',
-      },
-    },
-    opts = {
-      notify_on_error = false,
-      format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
-        if disable_filetypes[vim.bo[bufnr].filetype] then
-          return nil
-        else
-          return {
-            timeout_ms = 500,
-            lsp_format = 'fallback',
-          }
-        end
-      end,
-      formatters_by_ft = {
-        lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
-      },
-    },
   },
 
   { -- Autocompletion
@@ -982,7 +981,7 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = { 'python', 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -1011,7 +1010,7 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
@@ -1049,6 +1048,9 @@ require('lazy').setup({
     },
   },
 })
+
+-- Custom plugin options
+require 'custom.opt'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
