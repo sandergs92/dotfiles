@@ -52,5 +52,9 @@ if [ -f "/home/sandergs/miniconda3/bin/conda" ]; then
     eval "$(/home/sandergs/miniconda3/bin/conda shell.zsh hook)"
 fi
 
+bindkey -r '^l'
+bindkey -r '^g'
+bindkey -s '^g' 'clear\n'
+
 # should always be at bottom
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
