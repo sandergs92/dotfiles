@@ -13,3 +13,12 @@ vim.api.nvim_create_user_command('Q', function()
   end
   vim.cmd 'q'
 end, {})
+
+-- Similar functionality as :Q but now as save quit
+vim.api.nvim_create_user_command('WQ', function()
+  local view = require 'nvim-tree.view'
+  if view.is_visible() then
+    view.close()
+  end
+  vim.cmd 'wq'
+end, {})
