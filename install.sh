@@ -52,3 +52,6 @@ ln -s "$DOTFILES/picom" "$XDG_CONFIG_HOME"
 ########
 mkdir -p "$XDG_CONFIG_HOME/tmux"
 ln -sf "$DOTFILES/tmux/tmux.conf" "$XDG_CONFIG_HOME/tmux/tmux.conf"
+
+# Make all bash scripts in dotfiles executable
+find . -type f -name "*.sh" -exec chmod +x {} \;
