@@ -23,7 +23,7 @@ font pango:monospace 8
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id picom -b
-
+exec --no-startup-id i3-msg "workspace 1: terms"
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
@@ -49,6 +49,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
+exec --no-statup-id kitty --start-as=hidden
 bindsym $mod+Return exec kitty --single-instance
 
 # kill focused window
@@ -205,3 +206,4 @@ exec_always --no-startup-id feh --no-fehbg --bg-fill ~/.config/i3/feh/test.jpg
 hide_edge_borders smart
 
 for_window [class="kitty"] border pixel 1
+
