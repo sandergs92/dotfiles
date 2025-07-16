@@ -42,6 +42,12 @@ rm -rf "$XDG_CONFIG_HOME/kitty"
 ln -s "$DOTFILES/kitty" "$XDG_CONFIG_HOME"
 
 ########
+# ghost#
+########
+rm -rf "$XDG_CONFIG_HOME/ghostty"
+ln -s "$DOTFILES/ghostty" "$XDG_CONFIG_HOME"
+
+########
 # picom#
 ########
 rm -rf "$XDG_CONFIG_HOME/picom"
