@@ -211,3 +211,7 @@ for_window [class="kitty"] border pixel 1
 for_window [instance="ghostty"] move to scratchpad, border none
 bindsym $mod+Shift+s [instance="ghostty"] scratchpad show
 exec ghostty -e sh -c 'python3 -ic "from math import *"'
+
+# Start update Steam Proton GE update
+exec_always --no-startup-id $DOTFILES/proton-ge-custom/update_ge.sh
+

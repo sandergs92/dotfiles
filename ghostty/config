@@ -44,3 +44,5 @@
 theme = Blue Matrix
 
 font-family = "FiraCode Nerd Font"
+
+window-decoration = none
