@@ -207,10 +207,15 @@ hide_edge_borders smart
 
 for_window [class="kitty"] border pixel 1
 
-# Terminal scratchpad
-for_window [instance="ghostty"] move to scratchpad, border none
-bindsym $mod+Shift+s [instance="ghostty"] scratchpad show
-exec ghostty -e sh -c 'python3 -ic "from math import *"'
+# Calculator scratchpad
+for_window [title="kitty-math"] move to scratchpad, border none
+bindsym $mod+Shift+s [title="kitty-math"] scratchpad show
+exec kitty --title kitty-math -e sh -c 'python3 -ic "from math import *"'
+
+# Spotify scratchpad
+for_window [title="kitty-ncspot"] move to scratchpad, border none
+bindsym $mod+Shift+n [title="kitty-ncspot"] scratchpad show
+exec kitty --title kitty-ncspot -e sh -c 'ncspot'
 
 # Start update Steam Proton GE update
 exec_always --no-startup-id $DOTFILES/proton-ge-custom/update_ge.sh
