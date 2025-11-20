@@ -48,28 +48,22 @@ then
     pgrep i3 || exec startx "$XDG_CONFIG_HOME/X11/.xinitrc"
 fi
 
-# if [ -f "/home/sandergs/miniconda3/bin/conda" ]; then
-#    eval "$(/home/sandergs/miniconda3/bin/conda shell.zsh hook)"
-# fi
-
 bindkey -r '^l'
 bindkey -r '^g'
 bindkey -s '^g' 'clear\n'
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/sandergs/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'micromamba shell init' !!
+export MAMBA_EXE='/home/sandergs/.local/bin/micromamba';
+export MAMBA_ROOT_PREFIX='/home/sandergs/micromamba';
+__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
 if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
+    eval "$__mamba_setup"
 else
-    if [ -f "/home/sandergs/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/sandergs/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/sandergs/miniconda3/bin:$PATH"
-    fi
+    alias micromamba="$MAMBA_EXE"  # Fallback on help from micromamba activate
 fi
-unset __conda_setup
-# <<< conda initialize <<<
+unset __mamba_setup
+# <<< mamba initialize <<<
 
 # Enforce XDG dirs after conda / other scripts
 export XDG_CONFIG_HOME="$HOME/.config"
