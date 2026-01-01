@@ -52,19 +52,6 @@ bindkey -r '^l'
 bindkey -r '^g'
 bindkey -s '^g' 'clear\n'
 
-# >>> mamba initialize >>>
-# !! Contents within this block are managed by 'micromamba shell init' !!
-export MAMBA_EXE='/home/sandergs/.local/bin/micromamba';
-export MAMBA_ROOT_PREFIX='/home/sandergs/micromamba';
-__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__mamba_setup"
-else
-    alias micromamba="$MAMBA_EXE"  # Fallback on help from micromamba activate
-fi
-unset __mamba_setup
-# <<< mamba initialize <<<
-
 # Enforce XDG dirs after conda / other scripts
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -72,3 +59,5 @@ export XDG_CACHE_HOME="$HOME/.cache"
 
 # should always be at bottom
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+. "$HOME/.local/share/../bin/env"
