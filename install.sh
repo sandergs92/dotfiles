@@ -11,7 +11,7 @@ set -euo pipefail
 # nvim #
 ########
 rm -rf "$XDG_CONFIG_HOME/nvim"
-ln -s "$DOTFILES/nvim" "$XDG_CONFIG_HOME"
+ln -sfn "$DOTFILES/nvim" "$XDG_CONFIG_HOME/nvim"
 
 ########
 # x11  #
@@ -36,8 +36,8 @@ ln -s "$DOTFILES/polybar" "$XDG_CONFIG_HOME"
 ########
 mkdir -p "$XDG_CONFIG_HOME/zsh"
 mkdir -p "$XDG_DATA_HOME"
-ln -sf "$DOTFILES/zsh/.zshenv" "$HOME/.zshenv"
-ln -sf "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
+ln -sf "$DOTFILES/zsh/.zshenv" "$XDG_CONFIG_HOME/zsh/.zshenv"
+ln -sf "$DOTFILES/zsh/.zshrc" "$XDG_CONFIG_HOME/zsh/.zshrc"
 ln -sf "$DOTFILES/zsh/aliases" "$XDG_CONFIG_HOME/zsh/aliases"
 rm -rf "$XDG_CONFIG_HOME/zsh/external"
 ln -sf "$DOTFILES/zsh/external" "$XDG_CONFIG_HOME/zsh/external"
